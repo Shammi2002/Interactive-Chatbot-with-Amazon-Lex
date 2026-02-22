@@ -11,11 +11,11 @@ Developed an **interactive floral-ordering chatbot** designed for real-world sca
 ---
 
 ### 🛠 Technologies Used
-* **Conversational AI:** Amazon Lex (V2)
-* **Compute:** AWS Lambda (Serverless Backend)
+* **Conversational AI:** Amazon Lex 
+* **Compute:** AWS Lambda 
 * **Programming:** Python (Logic), R (Data Analysis)
-* **Machine Learning:** TensorFlow, BERT (Bidirectional Encoder Representations from Transformers)
-* **Environment:** AWS Management Console & CloudWatch
+* **Machine Learning:** TensorFlow, BERT
+
 
 ---
 

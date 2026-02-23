@@ -167,26 +167,53 @@ def order_flowers(intent_request):
     return close(intent_request['sessionAttributes'],
                  'Fulfilled',
                  {'contentType': 'PlainText',
-                  'content': 'Thanks, your order for {} has been placed and will be ready for pickup by {} on {}'.format(flower_type, pickup_time, date).'Have a nice day!'})
+                  'content': 'Thanks, your order for {} has been placed and will be ready for pickup by {} on {}'.format(flower_type, pickup_time, date)})
 
 
 """ --- Intents --- """
 
 
+""" --- New Intent Handlers --- """
+
+def handle_greeting(intent_request):
+    """Handles the Greeting intent."""
+    return close(
+        intent_request['sessionAttributes'],
+        'Fulfilled',
+        {'contentType': 'PlainText', 'content': 'Hello! How can I help you with your flower order today?'}
+    )
+
+def handle_fallback(intent_request):
+    """Handles the FallbackIntent when Lex doesn't understand the user."""
+    return close(
+        intent_request['sessionAttributes'],
+        'Fulfilled',
+        {'contentType': 'PlainText', 'content': 'I am sorry, I didnt quite catch that. You can say things like "I want to order flowers".'}
+    )
+
+""" --- Modified Dispatcher --- """
+
 def dispatch(intent_request):
     """
-    Called when the user specifies an intent for this bot.
+    Routes the incoming request based on the intent name.
     """
-
-    logger.debug('dispatch userId={}, intentName={}'.format(intent_request['userId'], intent_request['currentIntent']['name']))
-
     intent_name = intent_request['currentIntent']['name']
+    logger.debug(f'dispatch userId={intent_request["userId"]}, intentName={intent_name}')
 
-    # Dispatch to your bot's intent handlers
+    # 1. Handle OrderFlowers (Existing)
     if intent_name == 'OrderFlowers':
         return order_flowers(intent_request)
+    
+    # 2. Handle Greeting (New)
+    elif intent_name == 'Greeting':
+        return handle_greeting(intent_request)
+    
+    # 3. Handle FallbackIntent (New)
+    elif intent_name == 'FallbackIntent':
+        return handle_fallback(intent_request)
 
     raise Exception('Intent with name ' + intent_name + ' not supported')
+   
 
 
 """ --- Main handler --- """
